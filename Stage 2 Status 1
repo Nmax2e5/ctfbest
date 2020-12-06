@@ -1,0 +1,202 @@
+#include<bits/stdc++.h>
+
+#define int long long
+#define all(a) (a).begin(), (a).end()
+
+#define fr first
+#define sc second
+#define pb push_back
+#define mp make_pair
+#define pii pair<int, int>
+
+const int mod=1e9+7;
+const int N=2e5+3;
+const int inf=2e9+3;
+
+using namespace std;
+
+void kimusik()
+{
+    //freopen("labirint.txt","r",stdin);
+    ifstream in("labirint.txt");
+    //freopen("flag.txt","w",stdout);
+
+    vector<string>v;
+    string s;
+    while(in>>s)
+    {
+    	v.pb(s);
+    }
+
+    stack<char>stiva;
+    for(int i=0;i<v.size();i++)
+    {
+    	for(int j=0;j<v[i].size();j++)
+    	{
+    		if(v[i][j]=='$')
+    		{
+    			string ans;
+    			int ii=i,jj=j;
+    			ii++;
+    			//cout<<"\n";
+    			while(ii>=0 && ii<v.size() && jj>=0 && jj<v[ii].size() && v[ii][jj]!='@')
+    			{
+    				//cout<<v[ii][jj]<<" ";
+    				bool ok=1;
+    				if(v[ii][jj]=='(')
+    				{
+    					ok=0;
+    					reverse(all(ans));
+    					ans.pb(stiva.top());
+	    				reverse(all(ans));
+	    				stiva.pop();
+	    				int aux=jj+1;
+	    				int nr=0;
+	    				while(aux<v[ii].size() && (v[ii][aux]>='0' && v[ii][aux]<='9'))
+	    					nr=nr*10+(v[ii][aux]-'0'), aux++;
+	    				jj-=nr;
+    				}
+    				else if (v[ii][jj]==')')
+    				{
+    					ok=0;
+    					ans.pb(stiva.top());
+    					stiva.pop();
+	    				int aux=jj-1;
+	    				int nr=0;
+	    				string auxx;
+	    				while(aux>=0 && (v[ii][aux]>='0' && v[ii][aux]<='9'))
+	    					auxx.pb(v[ii][aux]), aux--;
+	    				for(int k=0;k<auxx.size();k++)
+	    					nr=nr*10+(auxx[k]-'0');
+	    				jj+=nr;
+    				}
+    				else if (v[ii][jj]=='-')
+    				{
+    					ok=0;
+    					ans.erase(ans.begin());
+	    				int aux=ii+1;
+	    				int nr=0;
+	    				while(aux<v.size() && (v[aux][jj]>='0' && v[aux][jj]<='9'))
+	    					nr=nr*10+(v[aux][jj]-'0'), aux++;
+	    				ii-=nr;
+    				}
+    				else if (v[ii][jj]=='+')
+    				{
+    					ok=0;
+    					ans.erase(ans.end()-1);
+	    				int aux=ii-1;
+	    				int nr=0;
+	    				string auxx;
+	    				while(aux>=0 && (v[aux][jj]>='0' && v[aux][jj]<='9'))
+	    					auxx.pb(v[aux][jj]), aux--;
+	    				for(int k=0;k<auxx.size();k++)
+	    					nr=nr*10+(auxx[k]-'0');
+	    				ii+=nr;
+    				}
+    				else
+	    			if(v[ii][jj]=='%')
+	    			{
+	    				ok=0;
+	    				reverse(all(ans));
+	    				ii++;
+	    			}
+	    		else
+	    			if(v[ii][jj]=='[')
+	    			{
+	    				ok=0;
+	    				stiva.push(v[ii][jj+1]);
+	    				jj+=2;
+	    			}
+	    		else
+	    			if(v[ii][jj]==']')
+	    			{
+	    				ok=0;
+	    				stiva.push(v[ii][jj-1]);
+	    				jj-=2;
+	    			}
+	    		else
+	    			if(v[ii][jj]=='*')
+	    			{
+	    				ok=0;
+	    				stiva.push(v[ii-1][jj]);
+	    				ii-=2;
+	    			}
+	    		else
+	    			if(v[ii][jj]=='.')
+	    			{
+	    				ok=0;
+	    				stiva.push(v[ii+1][jj]);
+	    				ii+=2;
+	    			}
+	    		else
+	    			if(v[ii][jj]=='<')
+	    			{
+	    				ok=0;
+	    				int aux=jj+1;
+	    				int nr=0;
+	    				while(aux<v[ii].size() && (v[ii][aux]>='0' && v[ii][aux]<='9'))
+	    					nr=nr*10+(v[ii][aux]-'0'), aux++;
+	    				jj-=nr;
+	    			}
+	    		else
+	    			if(v[ii][jj]=='>')
+	    			{
+	    				ok=0;
+	    				int aux=jj-1;
+	    				int nr=0;
+	    				string auxx;
+	    				while(aux>0 && (v[ii][aux]>='0' && v[ii][aux]<='9'))
+	    					auxx.pb(v[ii][aux]), aux--;
+	    				for(int k=0;k<auxx.size();k++)
+	    					nr=nr*10+(auxx[k]-'0');
+	    				jj+=nr;
+	    			}
+	    		else
+	    			if(v[ii][jj]=='^')
+	    			{
+	    				ok=0;
+	    				int aux=ii+1;
+	    				int nr=0;
+	    				while(aux<v.size() && (v[aux][jj]>='0' && v[aux][jj]<='9'))
+	    					nr=nr*10+(v[aux][jj]-'0'), aux++;
+	    				ii-=nr;
+	    			}
+	    		else
+	    			if(v[ii][jj]=='v')
+	    			{
+	    				ok=0;
+	    				int aux=ii-1;
+	    				int nr=0;
+	    				string auxx;
+	    				while(aux>0 && (v[aux][jj]>='0' && v[aux][jj]<='9'))
+	    					auxx.pb(v[aux][jj]), aux--;
+	    				for(int k=0;k<auxx.size();k++)
+	    					nr=nr*10+(auxx[k]-'0');
+	    				ii+=nr;
+	    			}
+	    			// if(ok)
+	    			// 	break;
+    			}
+    			if(ii>=0 && ii<v.size() && jj>=0 && jj<v[ii].size() && v[ii][jj]=='@')
+	    				{
+	    					cout<<ans<<"\n";
+	    				}
+    		}
+    	}
+    }
+    
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+    int t=1;
+    //cin>>t;
+
+    while(t--) {
+        kimusik();
+    }
+
+    return 0;
+}

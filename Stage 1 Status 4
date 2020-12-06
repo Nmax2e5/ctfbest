@@ -1,0 +1,51 @@
+/*Cheile au fost colectare intr-un fisier txt,
+iar cifrele romane au fost transformate in arabe.
+Numarul obtinut reprezinta pozitia bucatii de cod in cadrul cheii finale*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <ctype.h>
+#define LENGTH 4
+#define NRPIECES 100
+struct KeyPiece{
+int position;
+char b[LENGTH];
+}pieces[NRPIECES];
+
+int main()
+{
+    FILE *fptr;
+    fptr = fopen("data.txt","r");
+    int i=0;
+    for (int i=0;i<NRPIECES;i++)
+    {
+        fscanf(fptr,"%d",&pieces[i].position);
+        fgets(pieces[i].b,LENGTH,fptr);
+    }
+       fclose(fptr);
+struct KeyPiece aux;
+    for (int j=0;j<NRPIECES;j++)
+        for (i=0;i<NRPIECES-1;i++)
+        if(pieces[i].position>pieces[i+1].position)
+        {
+            aux=pieces[i];
+            pieces[i]=pieces[i+1];
+            pieces[i+1]=aux;
+        }
+
+    fptr = fopen("out.txt","w");
+
+    for (int i=0;i<NRPIECES;i++)
+    {
+        for (int j=0;j<LENGTH;j++)
+        pieces[i].b[j]=tolower(pieces[i].b[j]);
+    }
+    for (int i=0;i<NRPIECES;i++)
+    {
+        printf("%s",pieces[i].b);
+        fprintf(fptr,"%s",pieces[i].b);
+    }
+
+    return 0;
+}

@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+
+#define all(a) (a).begin(), (a).end()
+
+#define fr first
+#define sc second
+
+const int mod=1e9+7;
+const int nmax=1e6+3;
+const int inf=2e9+3;
+
+using namespace std;
+
+unsigned char* ReadBMP(char* filename)
+{
+    int i;
+    FILE* f = fopen(filename, "rb");
+
+    if(f == NULL)
+        throw "Argument Exception";
+
+    unsigned char info[54];
+    fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
+
+    // extract image height and width from header
+    int width = (int)&info[18];
+    int height = (int)&info[22];
+
+    cout << endl;
+    cout << "  Name: " << filename << endl;
+    cout << " Width: " << width << endl;
+    cout << "Height: " << height << endl;
+
+    int row_padded = (width*3 + 3) & (~3);
+    unsigned char* data = new unsigned char[row_padded];
+    unsigned char tmp;
+
+    int ans=0;
+    for(int i = 0; i < height; i++)
+    {
+        fread(data, sizeof(unsigned char), row_padded, f);
+        for(int j = 0; j < width*3; j += 3)
+        {
+            // Convert (B, G, R) to (R, G, B)
+            tmp = data[j];
+            data[j] = data[j+2];
+            data[j+2] = tmp;
+
+            ans+=data[j];
+
+            //if(!((int)data[j]==255 && (int)data[j+1]==255 && (int)data[j+2]==255))
+               // ans++;
+
+            //cout << "R: "<< (int)data[j] << " G: " << (int)data[j+1]<< " B: " << (int)data[j+2]<< endl;
+        }
+    }
+
+    cout<<ans<<"\n";
+
+    fclose(f);
+    return data;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+    ReadBMP("best.bmp");
+
+    return 0;
+}

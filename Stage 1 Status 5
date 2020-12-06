@@ -1,0 +1,82 @@
+#include<bits/stdc++.h>
+
+#define int long long
+#define all(a) (a).begin(), (a).end()
+
+#define fr first
+#define sc second
+#define pb push_back
+#define mp make_pair
+#define pii pair<int, int>
+
+const int mod=1e9+7;
+const int N=2e5+3;
+const int inf=2e9+3;
+
+using namespace std;
+
+void kimusik()
+{
+    //freopen("labirint.txt","r",stdin);
+    ifstream in("new_out.txt");
+    //freopen("flag.txt","w",stdout);
+
+    string v;
+    vector<string>a,b;
+    cout<<"decrypted:\n";
+    while(getline(in,v))
+    {
+        a.pb(v);
+    }
+
+    
+
+    cout<<"crypted:\n";
+    for(int i=0;i<a.size();i++)
+    {
+        for(int j=0;j<a[i].size();j++)
+            if(a[i][j]=='a') a[i][j]='v'; else
+            if(a[i][j]=='b') a[i][j]='a'; else
+            if(a[i][j]=='c') a[i][j]='e'; else
+            if(a[i][j]=='d') a[i][j]='g'; else
+            if(a[i][j]=='e') a[i][j]='z'; else
+            if(a[i][j]=='f') a[i][j]='y'; else
+            if(a[i][j]=='g') a[i][j]='c'; else
+            if(a[i][j]=='h') a[i][j]='u'; else
+            if(a[i][j]=='i') a[i][j]='o'; else
+            if(a[i][j]=='j') a[i][j]='?'; else
+            if(a[i][j]=='k') a[i][j]='t'; else
+            if(a[i][j]=='l') a[i][j]='q'; else
+            if(a[i][j]=='m') a[i][j]='r'; else
+            if(a[i][j]=='n') a[i][j]='n'; else
+            if(a[i][j]=='o') a[i][j]='i'; else
+            if(a[i][j]=='p') a[i][j]='w'; else
+            if(a[i][j]=='q') a[i][j]='m'; else
+            if(a[i][j]=='r') a[i][j]='b'; else
+            if(a[i][j]=='s') a[i][j]='x'; else
+            if(a[i][j]=='t') a[i][j]='k'; else
+            if(a[i][j]=='u') a[i][j]='s'; else
+            if(a[i][j]=='v') a[i][j]='h'; else
+            if(a[i][j]=='w') a[i][j]='t'; else
+            if(a[i][j]=='x') a[i][j]='j'; else
+            if(a[i][j]=='y') a[i][j]='p'; else
+            if(a[i][j]=='z') a[i][j]='?'; 
+
+        cout<<a[i]<<"\n";
+    }
+    
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+    int t=1;
+    //cin>>t;
+
+    while(t--) {
+        kimusik();
+    }
+
+    return 0;
+}
